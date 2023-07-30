@@ -4,6 +4,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      envFilePath: '.env',
+    }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
@@ -13,7 +16,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
         port: Number(configService.get('DB_PORT', 3306)),
         username: configService.get('DB_USERNAME', 'root'),
         password: configService.get('DB_PASSWORD', 'root'),
-        database: configService.get('DB_DATABSE', 'todo'),
+        database: configService.get('DB_DATABASE', 'todo'),
         entities: [],
         synchronize: true,
       }),
