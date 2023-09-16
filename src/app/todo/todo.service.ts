@@ -9,34 +9,34 @@ import { UpdateTodoDto } from './dto/update-todo.dto';
 export class TodoService {
   constructor(
     @InjectRepository(TodoEntity)
-    private readonly todoRespository: Repository<TodoEntity>,
+    private readonly todoRepository: Repository<TodoEntity>,
   ) {}
 
   async findAll() {
-    return await this.todoRespository.find();
+    return await this.todoRepository.find();
   }
 
   async findOneOrFail(id: string) {
     try {
-      return await this.todoRespository.findOneOrFail({ where: { id: id } });
+      return await this.todoRepository.findOneOrFail({ where: { id: id } });
     } catch (error) {
       throw new NotFoundException(error.message);
     }
   }
 
   async create(data: CreateTodoDto) {
-    return await this.todoRespository.save(this.todoRespository.create(data));
+    return await this.todoRepository.save(this.todoRepository.create(data));
   }
 
   async update(id: string, data: UpdateTodoDto) {
     const todo = await this.findOneOrFail(id);
 
-    this.todoRespository.merge(todo, data);
-    return await this.todoRespository.save(todo);
+    this.todoRepository.merge(todo, data);
+    return await this.todoRepository.save(todo);
   }
 
   async deleteById(id: string) {
     await this.findOneOrFail(id);
-    await this.todoRespository.softDelete(id);
+    await this.todoRepository.softDelete(id);
   }
 }
