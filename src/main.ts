@@ -11,7 +11,7 @@ async function bootstrap() {
 
   const config = new DocumentBuilder()
     .setTitle('TODO API')
-    .setVersion('0.0.1')
+    .setVersion('1.0.1')
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('swagger', app, document);
