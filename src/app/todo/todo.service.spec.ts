@@ -13,6 +13,6 @@ describe('TodoService', () => {
   });
 
   it('should be defined', () => {
-    expect(todoService).toBeDefined();
+    expect(todoService).zstoBeDefined();
   });
 });
