@@ -6,14 +6,14 @@ import { CreateTodoDto } from './dto/create-todo.dto';
 import { UpdateTodoDto } from './dto/update-todo.dto';
 
 const todoEntityList: TodoEntity[] = [
-  new TodoEntity({ id: '1', task: 'task-1', isDone: 0 }),
-  new TodoEntity({ id: '2', task: 'task-2', isDone: 0 }),
-  new TodoEntity({ id: '3', task: 'task-3', isDone: 0 }),
+  new TodoEntity({ id: '1', task: 'task-1', isDone: false }),
+  new TodoEntity({ id: '2', task: 'task-2', isDone: false }),
+  new TodoEntity({ id: '3', task: 'task-3', isDone: false }),
 ];
 
-const newTodoEntity = new TodoEntity({ task: 'new-task', isDone: 0 });
+const newTodoEntity = new TodoEntity({ task: 'new-task', isDone: false });
 
-const updatedTodoEntity = new TodoEntity({ task: 'task-1', isDone: 1 });
+const updatedTodoEntity = new TodoEntity({ task: 'task-1', isDone: true });
 
 describe('TodoController', () => {
   let todoController: TodoController;
@@ -71,7 +71,7 @@ describe('TodoController', () => {
       // Arrange
       const body: CreateTodoDto = {
         task: 'new-task',
-        isDone: 0,
+        isDone: false,
       };
 
       // Act
@@ -86,7 +86,7 @@ describe('TodoController', () => {
     it('should throw an expection', () => {
       const body: CreateTodoDto = {
         task: 'new-task',
-        isDone: 0,
+        isDone: false,
       };
 
       // Arrange
@@ -124,7 +124,7 @@ describe('TodoController', () => {
       // Arrange
       const body: UpdateTodoDto = {
         task: 'task-1',
-        isDone: 1,
+        isDone: true,
       };
 
       // Act
@@ -140,7 +140,7 @@ describe('TodoController', () => {
       // Arrange
       const body: UpdateTodoDto = {
         task: 'task-1',
-        isDone: 1,
+        isDone: true,
       };
 
       jest.spyOn(todoService, 'update').mockRejectedValueOnce(new Error());

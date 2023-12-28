@@ -14,13 +14,13 @@ export class TodoEntity {
   @ApiProperty()
   id: string;
 
-  @Column()
+  @Column({ type: 'varchar' })
   @ApiProperty()
   task: string;
 
-  @Column({ name: 'is_done', type: 'tinyint', width: 1 })
+  @Column({ name: 'is_done', type: 'boolean' })
   @ApiProperty()
-  isDone: number;
+  isDone: boolean;
 
   @CreateDateColumn({ name: 'created_at' })
   @ApiProperty()
@@ -37,7 +37,7 @@ export class TodoEntity {
   constructor(todo?: Partial<TodoEntity>) {
     this.id = todo?.id;
     this.task = todo?.task;
-    this.isDone = todo?.isDone;
+    this.isDone = todo?.isDone ?? false;
     this.createdAt = todo?.createdAt;
     this.updatedAt = todo?.updatedAt;
     this.deletedAt = todo?.deletedAt;

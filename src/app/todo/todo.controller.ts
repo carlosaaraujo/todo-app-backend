@@ -21,7 +21,7 @@ import { UpdateTodoSwagger } from './swagger/update-todo.swagger';
 import { BadRequestSwagger } from 'src/helpers/swagger/bad-request.swagger';
 import { NotFoundSwagger } from 'src/helpers/swagger/not-found.swagger';
 
-@Controller('api/v1/todos')
+@Controller('todos')
 @ApiTags('todos')
 export class TodoController {
   constructor(private readonly todoService: TodoService) {}
