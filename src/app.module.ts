@@ -1,7 +1,11 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { TypeOrmModule } from '@nestjs/typeorm';
+import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { TodoModule } from './app/todo/todo.module';
+import { AuthModule } from './app/auth/auth.module';
+import { APP_GUARD } from '@nestjs/core';
+import { JwtAuthGuard } from './app/auth/guards/jwt-auth.guard';
+import { UsersModule } from './app/user/user.module';
 
 @Module({
   imports: [
@@ -12,21 +16,24 @@ import { TodoModule } from './app/todo/todo.module';
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
-      useFactory: (configService: ConfigService) => ({
+      useFactory: (configService: ConfigService): TypeOrmModuleOptions => ({
         type: 'cockroachdb',
-        host: configService.get('DB_HOST', 'localhost'),
-        port: Number(configService.get('DB_PORT', 5432)),
-        username: configService.get('DB_USERNAME', 'root'),
-        password: configService.get('DB_PASSWORD', 'root'),
-        database: configService.get('DB_DATABASE', 'todo'),
+        url: configService.get<string>('DATABASE_URL'),
         ssl: true,
         autoLoadEntities: true,
         synchronize: true,
       }),
     }),
+    AuthModule,
+    UsersModule,
     TodoModule,
   ],
   controllers: [],
-  providers: [],
+  providers: [
+    {
+      provide: APP_GUARD,
+      useClass: JwtAuthGuard,
+    },
+  ],
 })
 export class AppModule {}
